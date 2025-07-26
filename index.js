@@ -3,21 +3,19 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 
-// Koneksi Database
-const database = require("../config/database");
+// Connect to DB
+const database = require("./config/database");
 database();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get("/", (req, res) => {
-  res.send("Backend is running on Vercel");
-});
-
 // Routes
-const studentRoute = require("../routes/studentRoute");
+const studentRoute = require("./routes/studentRoute");
 app.use("/mahasiswa", studentRoute);
 
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
